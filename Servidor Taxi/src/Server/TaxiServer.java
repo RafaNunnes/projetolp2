@@ -18,6 +18,10 @@ import ProdutorConsumidorBufferCircular.TaxiGenerator;
 import java.io.*;
 
 public class TaxiServer {
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {        
         
     	//variaveis do meme
@@ -26,6 +30,8 @@ public class TaxiServer {
         //variaveis dos taxis
         int numTaxis = 10;
         
+        System.out.println("Servidor aberto. Esperando servidor do bar.");
+        
         try (
             ServerSocket serverSocket = new ServerSocket(portNumber);        		
             Socket clientSocket = serverSocket.accept();          
@@ -33,7 +39,7 @@ public class TaxiServer {
         	DataInputStream in = new DataInputStream(clientSocket.getInputStream());            
         ) {
             
-        	System.out.println("Foi!\nSetando Taxis");
+        	System.out.println("Servidor do bar chegou!\nSetando Taxis");
         	TaxiBuffer b = new TaxiBuffer(numTaxis);
         	TaxiGenerator p = new TaxiGenerator(b, "Taxi");		// a cada 5 segundos, um novo taxi tenta chegar no buffer circular   	
         	
