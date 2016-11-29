@@ -18,7 +18,7 @@ public class ThreadedServer {
 		
 		try (
 				ServerSocket s = new ServerSocket(4444);			//socket para receber mensagens do usuario
-				Socket	 	ts = new Socket("localhost", 4440);		//socket para mandar mensagens para o servidor de taxi
+				Socket	 	ts = new Socket("localhost", 4441);		//socket para mandar mensagens para o servidor de taxi
 				){
 			
 			System.out.println("Servidor aberto!! Esperando Clientes");			

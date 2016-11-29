@@ -17,9 +17,10 @@ public class EchoClient {
 
 			while (true) {
 				String userInput = stdIn.readLine();
-				out.writeUTF(userInput);                   
-				System.out.println(in.readUTF());                
+				out.writeUTF(userInput);            
 				if(userInput.equals("bye") || userInput.equals("kys")) break;
+				System.out.println(in.readUTF());                
+				
 			}
 
 			in.close();

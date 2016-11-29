@@ -16,7 +16,6 @@ public class EchoServerMultiThread implements Runnable{
 	}
 
 	public void run() {
-		//while(true){
 		try (	
 				BufferedReader 		stdIn 	= new BufferedReader(new InputStreamReader(System.in));		//para ler o que vem do servidor de taxi
 				DataOutputStream 	outTaxi	= new DataOutputStream(ts.getOutputStream());
@@ -24,16 +23,50 @@ public class EchoServerMultiThread implements Runnable{
 				DataOutputStream 	out 	= new DataOutputStream(ss.getOutputStream());				//para lero que vem do cliente
 				DataInputStream 	in 		= new DataInputStream(ss.getInputStream());            
 				) {
-			//System.out.println("Foi!");
-
-			while (true) {             	
+				
+			Pedido pedido = new Pedido();
+			int cont = 0;
+			boolean pedidoAndamento = true;
+			
+			while (true) {          
+				
 				String inputLine = in.readUTF();  		//le o que vem do cliente
 				switch (inputLine)						//trata o que vem do cliente
 				{
 				case "menu":
-					out.writeUTF("Martini: R$10\nToba: R$15");   
-					break;					
-					
+					while(pedidoAndamento){
+						out.writeUTF(pedido.exibeMenu()); 
+						while(true){
+							int id = Integer.parseInt(in.readUTF());
+							
+							if(id<0){
+								out.writeUTF("\nId invalido, tente novamente!\n");
+							} else if(cont>=30){
+								out.writeUTF("\nNumero maximo de compras atingidas!\n");
+							} else if(id == 0){
+								out.writeUTF("\nEtapa de compras finalizada!\n"
+										+ "Deseja finalizar as compras?(s/n)\n");
+								break;
+							} else{
+								out.writeUTF(pedido.fazerPedido(id));
+								cont++;
+							}
+						}
+						
+						if("s".equals(in.readUTF())){		// Deseja fechar a conta
+							out.writeUTF("Deseja entrega em domicilio?(s/n)\n");
+							if("s".equals(in.readUTF())){
+								out.writeUTF("Digite o seu endereco de entrega: \n"); // Com ou sem Delivery
+								out.writeUTF(pedido.entrega(in.readUTF()));
+							}
+								
+							out.writeUTF(pedido.fecharPedido(in.readUTF())); // Encerramento da conta
+							pedidoAndamento = false;
+						}else{
+							//break;
+						}						
+					}
+					break;
 				case "taxi":							//envia "request" e retorna ao cliente					
 					if(!jaPediuTaxi)
 					{

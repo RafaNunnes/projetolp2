@@ -21,7 +21,7 @@ public class TaxiServer {
     public static void main(String[] args) throws IOException {        
         
     	//variaveis do meme
-        int portNumber = 4440;
+        int portNumber = 4441;
         
         //variaveis dos taxis
         int numTaxis = 10;
