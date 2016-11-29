@@ -1,11 +1,11 @@
 /************************************************************************************************
  * Servidor do bar by Gabriel Fleig
- * 
+ *
  * O servidor deve ser iniciado depois do servidor de taxi
  * cria socket para se comunicar com o servidor do taxi e outro para comunicar com os clientes
  * Espera pelo menos um cliente entrar
  * Se Todos clientes sairem, ninguem mais entra <===========MERDA MERDA MERDA
- * 
+ *
  *************************************************************************************************/
 
 import java.net.*;
@@ -13,24 +13,26 @@ import java.io.*;
 
 public class ThreadedServer {
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		System.out.println("Bem-vindo ao servidor do bar!!");
-		
+
 		try (
 				ServerSocket s = new ServerSocket(4444);			//socket para receber mensagens do usuario
-				Socket	 	ts = new Socket("localhost", 4441);		//socket para mandar mensagens para o servidor de taxi
+				Socket ts = new Socket("localhost", 4441);		//socket para mandar mensagens para o servidor de taxi
+				DataOutputStream 	outTaxi	= new DataOutputStream(ts.getOutputStream());
+				DataInputStream 	inTaxi 	= new DataInputStream(ts.getInputStream());
 				){
-			
-			System.out.println("Servidor aberto!! Esperando Clientes");			
-			
+
+			System.out.println("Servidor aberto!! Esperando Clientes");
+
 			while(true){
 				Socket ns = s.accept();
-				new Thread(new EchoServerMultiThread(ns, ts)).start();
+				new Thread(new EchoServerMultiThread(ns, ts, outTaxi, inTaxi)).start();
 				System.out.println("Novo cliente chegou!");
 			}
 			//s.close();
 
-		} catch (IOException e) { 
+		} catch (IOException e) {
 			System.out.println("Servidor do taxi nao encontrado... fechando.");
 		}
 	}
