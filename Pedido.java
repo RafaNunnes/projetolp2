@@ -31,7 +31,7 @@ public class Pedido {
 			nome = scanner.next();
 			valor = scanner.next();
 			
-			menu+= codigo + "   "+ nome + "      " + valor;
+			menu = menu + "\n" + codigo + "   "+ nome + "      " + valor;
 		}
 		
 		scanner.close();
