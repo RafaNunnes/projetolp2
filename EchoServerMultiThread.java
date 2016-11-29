@@ -41,7 +41,9 @@ public class EchoServerMultiThread implements Runnable{
 					while(pedidoAndamento){
 						out.writeUTF(pedido.exibeMenu());
 						while(true){
-							int id = Integer.parseInt(in.readUTF());
+							int id = -1;
+							String a = in.readUTF();
+							if(!(a.equals(""))){ id = Integer.parseInt(a);}
 
 							if(id<0){
 								out.writeUTF("\nId invalido, tente novamente!\n");

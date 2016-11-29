@@ -1,4 +1,8 @@
 1#Coca-Cola#4.5
 2#Cerveja#3.5
 3#So Alcool#10.0
-4#So Alcooooooooool#10.0
+4#Coxinha#5.0
+5#Galeto#10.0
+6#Pitu#2.0
+7#Litrao#2.0
+8#Agua#3.0
